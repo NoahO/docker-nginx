@@ -1,0 +1,5 @@
+
+#This is the default location, in docker-compose.
+location / {
+	proxy_pass http://sickrage:8081/sickrage;
+}

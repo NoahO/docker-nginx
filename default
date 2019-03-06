@@ -1,0 +1,50 @@
+location ^~/couchpotato {
+	proxy_pass http://couchpotato:5050;
+}
+
+#This is the default location, in docker-compose.
+location ^~/sickrage {
+	proxy_pass http://sickrage:8081;
+}
+
+location ^~/sabnzbd {
+	proxy_pass http://sabnzbd:8080;
+}
+
+#Subsonic only works with slash, eg, https://host/subsonic/ , no matter what. Seems to be problem in subsonic client.
+location ^~/subsonic {
+	proxy_pass http://172.18.0.1:4040;
+    auth_basic off;
+}
+
+location ^~/transmission {
+	proxy_pass http://172.18.0.1:9091;
+}
+
+#But still, because a volume is mapped, need to kill it and the volumes
+#Also, have to force refresh in firefox
+#And clear prev omnifocus syncs
+#There is a bug with omnifocus not liking a different password. Something about linked encryption passwords maybe.
+#Run this to remove volumes and keep changes -
+
+### docker-compose rm -f -s -v nginx
+
+
+location ^~/webdav {
+	# to avoid 502 Bad Gateway:
+    # http://vanderwijk.info/Members/ivo/articles/ComplexSVNSetupFix
+    set $destination $http_destination;
+
+    if ($destination ~* ^https(.+)$) {
+         set $destination http$1;
+    }
+
+    proxy_set_header Destination $destination;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $remote_addr;
+
+   	proxy_pass http://webdav;
+
+   	auth_basic "WebDAV";
+	auth_basic_user_file /etc/nginx/htpasswd/webdav;
+}
