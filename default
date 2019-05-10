@@ -13,7 +13,7 @@ location ^~/sabnzbd {
 
 #Subsonic only works with slash, eg, https://host/subsonic/ , no matter what. Seems to be problem in subsonic client.
 location ^~/subsonic {
-	proxy_pass http://172.18.0.1:4040;
+	proxy_pass http://subsonic:4040;
     auth_basic off;
 }
 
