@@ -3,8 +3,8 @@ location ^~/couchpotato {
 }
 
 #This is the default location, in docker-compose.
-location ^~/sickrage {
-	proxy_pass http://sickrage:8081;
+location ^~/sickchill {
+	proxy_pass http://sickchill:8081;
 }
 
 location ^~/sabnzbd {
