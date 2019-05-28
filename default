@@ -19,7 +19,7 @@ location ^~/subsonic {
 }
 
 location ^~/transmission {
-	proxy_pass http://172.18.0.1:9091;
+	proxy_pass http://transmission:9091;
 }
 
 #But still, because a volume is mapped, need to kill it and the volumes
